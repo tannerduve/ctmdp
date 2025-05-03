@@ -1,0 +1,13 @@
+* Commit message
+- use lower case
+- follow [[https://www.conventionalcommits.org/en/v1.0.0/][Conventional Commits]]
+* Branching
+only use the main branch
+* Code formating and linting
+Check and format before committing.
+Use [[https://github.com/astral-sh/ruff][ruff]] for that.
+#+BEGIN_SRC shell
+ruff check
+ruff format
+#+END_SRC
+
