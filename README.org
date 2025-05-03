@@ -1,3 +1,27 @@
 #+html: <p align="center"><strong>ctmdp</strong> A simple Python implementation for categorical semantics of Markov decision processes</p>
 
 ** Getting started
+
+** Examples
+The examples are located in the `examples` folder.
+To run an example run
+#+BEGIN_SRC shell
+python3 -m examples.mdp
+#+END_SRC
+or
+#+BEGIN_SRC shell
+python3 -m examples.box_product
+#+END_SRC
+etc.
+
+** Planned Features
+*** Package and add to pypi
+Use poetry or uv
+*** jupytext examples
+*** visualization backend
+For example to graphviz or tikz
+*** bridge to gymnasium
+*** more experiments and examples
+- box product
+- quotients of MDPs
+- ...
