@@ -2,6 +2,10 @@
 
 ** Getting started
 
+This package is inspired by [[https://github.com/mvcisback/dfa][dfa]] and intends
+to generalize its behavior
+the Markov decision process (MDP) setting.
+
 ** Examples
 The examples are located in the `examples` folder.
 To run an example run
