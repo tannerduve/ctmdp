@@ -61,6 +61,10 @@ class MDP:
                     measure = action_data
                     action = Action(state, measure)
 
+                else:  # deterministic action
+                    measure = {action_data: 1}
+                    action = Action(state, measure)
+
                 state.actions[action_label] = action
 
     @property
