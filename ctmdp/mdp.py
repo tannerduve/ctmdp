@@ -71,6 +71,29 @@ class MDP:
     def state_labels(self):
         return {v: k for k, v in self.states.items()}
 
+    def relabel_states(self, relabeling_tuples):
+        for old, new in relabeling_tuples:
+            if old in self.states:
+                state = self.states[old]
+                self.states.pop(old)
+                self.states[new] = state
+
+    def relabel_actions(self, relabeling_tuples):
+        for old, new in relabeling_tuples:
+            for state in self.states.values():
+                if old in state.actions:
+                    action = state.actions[old]
+                    state.actions.pop(old)
+                    state.actions[new] = action
+
+    def relabel_all_states(self, relabeling_function):
+        old_states = self.states.copy()
+        for old in old_states:
+            state = self.states[old]
+            new = relabeling_function(old)
+            self.states.pop(old)
+            self.states[new] = state
+
 
 class Policy:
     def __init__(self, mdp, policy_dict):
