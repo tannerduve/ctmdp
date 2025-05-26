@@ -11,8 +11,15 @@ def _bp_action_data(states, labels, index):
     s_source = states[index]
     s_target = states[(index + 1) % 2]
 
+    def labels_postfix(i):
+        label = labels[i]
+        if label:
+            return f"-{label}"
+        else:
+            return ""
+
     return {
-        f"{action.label}-{labels[index]}": (
+        f"{action.label}{labels_postfix(index)}": (
             {switch_states((k, s_target.label)): v for k, v in action.measure.items()},
             action.reward,
         )
