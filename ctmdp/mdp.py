@@ -2,20 +2,32 @@ from random import choices
 
 
 class State:
-    def __init__(self, label):
-        self.label = label
+    def __init__(self, mdp):
+        self.mdp = mdp
         self.actions = {}
+
+    @property
+    def label(self):
+        return self.mdp.state_labels[self]
+
+    @property
+    def action_labels(self):
+        return {v: k for k, v in self.actions.items()}
 
     def __repr__(self):
         return f"<State {self.label}>"
 
 
 class Action:
-    def __init__(self, label, state, measure, reward=0):
-        self.label = label
+    def __init__(self, state, measure, reward=0):
         self.state = state
         self.measure = measure
         self.reward = reward
+        self.mdp = state.mdp
+
+    @property
+    def label(self):
+        return self.state.action_labels[self]
 
     def transition(self):
         states = list(self.measure.keys())
@@ -39,18 +51,21 @@ class MDP:
     def __init__(self, description):
         self.states = {}
         for state_label, state_actions_desc in description.items():
-            state = State(state_label)
-            state.mdp = self
+            state = State(self)
+            self.states[state_label] = state
             for action_label, action_data in state_actions_desc.items():
                 if isinstance(action_data, tuple):  # description with reward
                     measure, reward = action_data
-                    action = Action(action_label, state, measure, reward=reward)
+                    action = Action(state, measure, reward=reward)
                 elif isinstance(action_data, dict):  # description without reward
                     measure = action_data
-                    action = Action(action_label, state, measure)
-                action.mdp = self
-                state.actions[action.label] = action
-            self.states[state.label] = state
+                    action = Action(state, measure)
+
+                state.actions[action_label] = action
+
+    @property
+    def state_labels(self):
+        return {v: k for k, v in self.states.items()}
 
 
 class Policy:
