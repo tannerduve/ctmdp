@@ -94,6 +94,20 @@ class MDP:
             self.states.pop(old)
             self.states[new] = state
 
+    def simulate_policy(self, policy, start=None, goals=None, max_steps=50):
+        if start is None:
+            start = list(self.states.keys())[0]
+        if goals is None:
+            goals = [list(self.states.keys())[-1]]
+        states = [start]
+        actions = []
+        while len(states) - 1 <= max_steps and not states[-1] in goals:
+            action = policy.select_action(states[-1])
+            actions.append(action.label)
+            state = action.transition()
+            states.append(state.label)
+        return states, actions
+
 
 class Policy:
     def __init__(self, mdp, policy_dict):
