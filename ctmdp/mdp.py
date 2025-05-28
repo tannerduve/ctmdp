@@ -108,6 +108,11 @@ class MDP:
             states.append(state.label)
         return states, actions
 
+    def set_rewards(self, f):
+        for state in self.states.values():
+            for action in state.actions.values():
+                action.reward = f(action.label)
+
 
 class Policy:
     def __init__(self, mdp, policy_dict):
