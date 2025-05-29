@@ -111,7 +111,20 @@ class MDP:
     def set_rewards(self, f):
         for state in self.states.values():
             for action in state.actions.values():
-                action.reward = f(action.label)
+                action.reward = f(action)
+
+    def add_rewards(self, f):
+        for state in self.states.values():
+            for action in state.actions.values():
+                action.reward += f(action)
+
+    @property
+    def first_state(self):
+        return list(self.states.values())[0]
+
+    @property
+    def last_state(self):
+        return list(self.states.values())[-1]
 
 
 class Policy:
