@@ -96,9 +96,9 @@ class MDP:
 
     def simulate_policy(self, policy, start=None, goals=None, max_steps=50):
         if start is None:
-            start = list(self.states.keys())[0]
+            start = self.first_state.label
         if goals is None:
-            goals = [list(self.states.keys())[-1]]
+            goals = [self.last_state.label]
         states = [start]
         actions = []
         while len(states) - 1 <= max_steps and not states[-1] in goals:
