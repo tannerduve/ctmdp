@@ -1,6 +1,12 @@
 from ctmdp.mdp import MDP, Policy
 from ctmdp.box_product import box_product
-from ctmdp.constructors import path_mdp, cycle_mdp, reward_next, reward_reaching
+from ctmdp.constructors import (
+    path_mdp,
+    cycle_mdp,
+    reward_action_label,
+    punish_non_action_label,
+    reward_reaching,
+)
 from ctmdp.q_learning import q_learning
 
 path1 = path_mdp(10)
@@ -25,7 +31,8 @@ def append(args):
 cube.relabel_all_states(append)
 
 
-path1.set_rewards(reward_next)
+path1.set_rewards(reward_action_label("next", 1))
+path1.set_rewards(punish_non_action_label("next", 2))
 
 
 def last_state(mdp):

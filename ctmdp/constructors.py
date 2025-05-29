@@ -30,11 +30,24 @@ def path_mdp(n):
     return MDP(path_mdp_desc(n))
 
 
-def reward_next(action):
-    if action.label == "next":
-        return 1
-    else:
-        return -2
+def reward_action_label(label, reward):
+    def reward_function(action):
+        if action.label == label:
+            return reward
+        else:
+            return 0
+
+    return reward_function
+
+
+def punish_non_action_label(label, punishment):
+    def reward_function(action):
+        if action.label != label:
+            return -punishment
+        else:
+            return 0
+
+    return reward_function
 
 
 def reward_reaching(state, reward):
