@@ -1,10 +1,10 @@
 from ctmdp.mdp import MDP, Policy
 from ctmdp.box_product import box_product
-from ctmdp.constructors import (
-    path_mdp,
-    cycle_mdp,
+from ctmdp.constructors.path import path_mdp
+import ctmdp.constructors.path as path
+from ctmdp.rewards import (
     reward_action_label,
-    punish_non_action_label,
+    penalize_non_action_label,
     reward_reaching,
 )
 from ctmdp.q_learning import q_learning
@@ -32,21 +32,18 @@ cube.relabel_all_states(append)
 
 
 path1.set_rewards(reward_action_label("next", 1))
-path1.set_rewards(punish_non_action_label("next", 2))
-
-
-def last_state(mdp):
-    return list(mdp.states.values())[-1]
-
-
-path1.add_rewards(reward_reaching(last_state(path1), 10))
+path1.set_rewards(penalize_non_action_label("next", 2))
+path1.add_rewards(reward_reaching(path1.last_state, 10))
 
 path1_table = q_learning(
-    path1, episodes=10000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=10
+    path1, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=20
 )
 # path2_table = q_learning(
 #     path2, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=20
 # )
 
-p1 = Policy(path1, path1_table)
-print(list(zip(*path1.simulate_policy(p1))))
+p1 = Policy(path1, path1_table).deterministic
+print(path1.simulate_policy(p1))
+
+p2 = Policy(path1, path.optimal_policy(10))
+print(path1.simulate_policy(p2))
