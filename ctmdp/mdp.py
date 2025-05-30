@@ -96,17 +96,15 @@ class MDP:
 
     def simulate_policy(self, policy, start=None, goals=None, max_steps=50):
         if start is None:
-            start = self.first_state.label
+            start = self.first_state
         if goals is None:
             goals = [self.last_state.label]
         states = [start]
         actions = []
-        while len(states) - 1 <= max_steps and not states[-1] in goals:
-            action = policy.select_action(states[-1])
-            actions.append(action.label)
-            state = action.transition()
-            states.append(state.label)
-        return states, actions
+        while len(states) - 1 <= max_steps and not states[-1].label in goals:
+            actions.append(policy.select_action(states[-1].label))
+            states.append(actions[-1].transition())
+        return Path(self, states, actions)
 
     def set_rewards(self, f):
         for state in self.states.values():
@@ -125,6 +123,25 @@ class MDP:
     @property
     def last_state(self):
         return list(self.states.values())[-1]
+
+
+class Path:
+    def __init__(self, mdp, states, actions):
+        self.mdp = mdp
+        self.states = states
+        self.actions = actions
+
+    @property
+    def transitions(self):
+        return [
+            (self.states[i], self.actions[i], self.states[i + 1])
+            for i in range(len(self.actions))
+        ]
+
+    def __repr__(self):
+        return "".join(
+            [f"{s.label} -{a.label}-> " for s, a, _ in self.transitions]
+        ) + str(self.transitions[-1][-1].label)
 
 
 class Policy:
