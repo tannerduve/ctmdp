@@ -60,12 +60,13 @@ class MDP:
                 elif isinstance(action_data, dict):  # description without reward
                     measure = action_data
                     action = Action(state, measure)
-
                 else:  # deterministic action
                     measure = {action_data: 1}
                     action = Action(state, measure)
 
                 state.actions[action_label] = action
+        self.start = self.first_state
+        self.goals = [self.last_state]
 
     @property
     def state_labels(self):
@@ -96,9 +97,9 @@ class MDP:
 
     def simulate_policy(self, policy, start=None, goals=None, max_steps=50):
         if start is None:
-            start = self.first_state
+            start = self.start
         if goals is None:
-            goals = [self.last_state.label]
+            goals = self.goals
         states = [start]
         actions = []
         while len(states) - 1 <= max_steps and not states[-1].label in goals:
@@ -124,6 +125,12 @@ class MDP:
     def last_state(self):
         return list(self.states.values())[-1]
 
+    def set_goal_states(self, goals):
+        self.goals = goals
+
+    def set_start_state(self, start):
+        self.start = start
+
 
 class Path:
     def __init__(self, mdp, states, actions):
@@ -147,7 +154,12 @@ class Path:
 class Policy:
     def __init__(self, mdp, policy_dict):
         self.mdp = mdp
-        self.policy = policy_dict
+        # Drop policy for goal states.
+        self.policy = {
+            state: actions
+            for state, actions in policy_dict.items()
+            if not state in map(State.label.fget, mdp.goals)
+        }
 
     def select_action(self, state_label):
         action_probs = self.policy[state_label]
