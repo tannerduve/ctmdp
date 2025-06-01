@@ -1,4 +1,5 @@
 import random
+from ctmdp.mdp import Policy, State
 
 
 def init_q(mdp):
@@ -65,3 +66,41 @@ def q_learning(mdp, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=
             s_label = next_state_label
 
     return Q
+
+
+def q_learning_until(
+    target_policy, mdp, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=50
+):
+    print("target:", target_policy.deterministic.policy)
+
+    # 1. Initialize Q-table
+    Q = init_q(mdp)
+    current_policy = Policy(mdp, Q)
+
+    episode = 0
+    print(f"current {episode}:", current_policy.deterministic.policy)
+    # Run new epidodes until target policy is found.
+    while (
+        episode < episodes
+        and target_policy.deterministic.policy != current_policy.deterministic.policy
+    ):
+        # 2. Start state - pick something or random
+        s_label = random.choice(list(mdp.states.keys()))
+        step = 0
+        # Run steps until goal state is reached.
+        while step < max_steps and s_label not in map(State.label.fget, mdp.goals):
+            a_label = e_greedy(Q, s_label, mdp, epsilon)
+            action = mdp.states[s_label].actions[a_label]
+            next_state = action.transition()
+            next_state_label = next_state.label
+            reward = action.reward
+
+            Q = q_update(Q, s_label, a_label, next_state_label, reward, alpha, gamma)
+            s_label = next_state_label
+            step += 1
+
+        episode += 1
+        current_policy = Policy(mdp, Q)
+        print(f"current {episode}:", current_policy.deterministic.policy)
+
+    return current_policy, episode
