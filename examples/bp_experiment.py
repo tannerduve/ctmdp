@@ -7,7 +7,7 @@ from ctmdp.rewards import (
     penalize_non_action_label,
     reward_reaching,
 )
-from ctmdp.q_learning import q_learning
+from ctmdp.q_learning import q_learning, q_learning_until
 
 path1 = path_mdp(10)
 path2 = path_mdp(15)
@@ -35,15 +35,13 @@ path1.set_rewards(reward_action_label("next", 1))
 path1.set_rewards(penalize_non_action_label("next", 2))
 path1.add_rewards(reward_reaching(path1.last_state, 10))
 
-path1_table = q_learning(
-    path1, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=20
+optimal_policy = Policy(path1, path.optimal_policy(10))
+policy, episodes = q_learning_until(
+    optimal_policy,
+    path1,
+    episodes=100,
+    alpha=0.1,
+    gamma=0.9,
+    epsilon=0.1,
+    max_steps=20,
 )
-# path2_table = q_learning(
-#     path2, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=20
-# )
-
-p1 = Policy(path1, path1_table).deterministic
-print(path1.simulate_policy(p1))
-
-p2 = Policy(path1, path.optimal_policy(10))
-print(path1.simulate_policy(p2))
