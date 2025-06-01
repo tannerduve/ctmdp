@@ -178,6 +178,9 @@ class Policy:
         }
         return Policy(self.mdp, policy)
 
+    def __repr__(self):
+        return str(self.policy)
+
 
 class MDPMorphism:
     def __init__(self, source, target, f, g):
