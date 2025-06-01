@@ -171,9 +171,9 @@ class Policy:
     @property
     def deterministic(self):
         """Return a deterministic version of the policy
-        by taking the actions with the heighest weight."""
+        by selecting the action with the heighest weight."""
         policy = {
-            state: dict([max(actions.items(), key=lambda t: t[1])])
+            state: dict([(max(actions.items(), key=lambda t: t[1])[0], 1)])
             for state, actions in self.policy.items()
         }
         return Policy(self.mdp, policy)
