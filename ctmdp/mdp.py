@@ -20,10 +20,18 @@ class State:
 
 class Action:
     def __init__(self, state, measure, reward=0):
-        self.state = state
-        self.measure = measure
-        self.reward = reward
         self.mdp = state.mdp
+        self.state = state
+        self.reward = reward
+        self._initial_measure = measure
+
+    def _initialize_measure(self):
+        # Use State objects as keys for the measure.
+        # Keeps track of relabeling of states.
+        self.measure = {
+            self.mdp.states[state]: weight
+            for state, weight in self._initial_measure.items()
+        }
 
     @property
     def label(self):
@@ -33,15 +41,11 @@ class Action:
         states = list(self.measure.keys())
         weights = list(self.measure.values())
         outcome = choices(states, weights=weights)[0]
-        return self.mdp.states[outcome]
+        return outcome
 
     @property
     def reachable_states(self):
-        return [
-            self.mdp.states[state]
-            for state, weight in self.measure.items()
-            if weight > 0
-        ]
+        return [state for state, weight in self.measure.items() if weight > 0]
 
     def __repr__(self):
         return f"<Action {self.label} @{self.state}>"
@@ -65,6 +69,9 @@ class MDP:
                     action = Action(state, measure)
 
                 state.actions[action_label] = action
+        for state in self.states.values():
+            for action in state.actions.values():
+                action._initialize_measure()
         self.start = self.first_state
         self.goals = [self.last_state]
 
