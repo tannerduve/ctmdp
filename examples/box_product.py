@@ -1,5 +1,5 @@
 from .mdp import mdp
-from ctmdp.box_product import box_product
+from ctmdp.products import box_product
 
 bx = box_product(mdp, mdp)
 bx.states[((0, 0), (0, 0))].actions["right-M1"].transition()

@@ -1,5 +1,5 @@
 from ctmdp.mdp import MDP, Policy
-from ctmdp.box_product import box_product
+from ctmdp.products import box_product, cartesian_product
 from ctmdp.constructors.path import path_mdp
 import ctmdp.constructors.path as path
 from ctmdp.rewards import (
@@ -45,3 +45,11 @@ policy, episodes = q_learning_until(
     epsilon=0.1,
     max_steps=20,
 )
+
+# cartesian product
+cp = cartesian_product(path1, path2)
+cp = cartesian_product(cp, path1)
+cp.relabel_all_states(append)
+
+# policy on product from components
+# refine policy products as a measure for generalization
