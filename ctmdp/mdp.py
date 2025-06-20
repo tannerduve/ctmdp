@@ -118,7 +118,7 @@ class MDP:
             goals = self.goals
         states = [start]
         actions = []
-        while len(states) - 1 <= max_steps and not states[-1].label in goals:
+        while len(states) - 1 <= max_steps and states[-1].label not in goals:
             actions.append(policy.select_action(states[-1].label))
             states.append(actions[-1].transition())
         return Path(self, states, actions)
@@ -174,7 +174,7 @@ class Policy:
         self.policy = {
             state: actions
             for state, actions in policy_dict.items()
-            if not state in map(State.label.fget, mdp.goals)
+            if state not in map(State.label.fget, mdp.goals)
         }
 
     def select_action(self, state_label):
