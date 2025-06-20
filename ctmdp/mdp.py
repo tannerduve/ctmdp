@@ -181,6 +181,10 @@ class Policy:
         action_probs = self.policy[state_label]
         actions = list(action_probs.keys())
         probs = list(action_probs.values())
+        if sum(probs) <= 0:
+            # translate
+            eps = 0.01
+            probs = [-sum(probs) + eps + p for p in probs]
         action = choices(actions, weights=probs)[0]
         return self.mdp.states[state_label].actions[action]
 
