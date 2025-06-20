@@ -1,4 +1,4 @@
-from ctmdp.mdp import MDP, Policy
+from ctmdp.mdp import MDP
 from ctmdp.constructors.cycle import cycle_mdp_actions
 
 
