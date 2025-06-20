@@ -14,6 +14,10 @@ class State:
     def action_labels(self):
         return {v: k for k, v in self.actions.items()}
 
+    @property
+    def actions_list(self):
+        return list(self.actions.values())
+
     def __repr__(self):
         return f"<State {self.label}>"
 
@@ -48,7 +52,7 @@ class Action:
         return [state for state, weight in self.measure.items() if weight > 0]
 
     def __repr__(self):
-        return f"<Action {self.label} @{self.state}>"
+        return f"<Action {self.label} @{self.state}, Reward:{self.reward}>"
 
 
 class MDP:
@@ -77,7 +81,12 @@ class MDP:
 
     @property
     def state_labels(self):
+        "Dictionary mapping states to labels"
         return {v: k for k, v in self.states.items()}
+
+    @property
+    def states_list(self):
+        return list(self.states.values())
 
     def relabel_states(self, relabeling_tuples):
         for old, new in relabeling_tuples:
