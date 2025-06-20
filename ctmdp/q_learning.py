@@ -71,14 +71,14 @@ def q_learning(mdp, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=
 def q_learning_until(
     target_policy, mdp, episodes=1000, alpha=0.1, gamma=0.9, epsilon=0.1, max_steps=50
 ):
-    print("target:", target_policy.deterministic.policy)
+    # print("target:", target_policy.deterministic.policy)
 
     # 1. Initialize Q-table
     Q = init_q(mdp)
     current_policy = Policy(mdp, Q)
 
     episode = 0
-    print(f"current {episode}:", current_policy.deterministic.policy)
+    # print(f"current {episode}:", current_policy.deterministic.policy)
     # Run new epidodes until target policy is found.
     while (
         episode < episodes
@@ -101,6 +101,6 @@ def q_learning_until(
 
         episode += 1
         current_policy = Policy(mdp, Q)
-        print(f"current {episode}:", current_policy.deterministic.policy)
+        # print(f"current {episode}:", current_policy.deterministic.policy)
 
     return current_policy, episode
