@@ -8,7 +8,9 @@ the Markov decision process (MDP) setting.
 
 ** Examples
 The examples are located in the `examples` folder.
-To run an example run
+
+*** Basic Examples
+To run a basic example:
 #+BEGIN_SRC shell
 python3 -m examples.mdp
 #+END_SRC
@@ -16,7 +18,14 @@ or
 #+BEGIN_SRC shell
 python3 -m examples.box_product
 #+END_SRC
-etc.
+
+*** Product Comparison Experiments
+Compare convergence behavior of box products vs cartesian products:
+#+BEGIN_SRC shell
+python3 -m examples.compare_products
+#+END_SRC
+
+**Key Finding**: Box Product converges to optimal policy in 60-70% of runs on small grids, while Cartesian Product fails to converge. This demonstrates that action space *structure* (decomposability) is more critical for learning than action space *size*.
 
 ** Planned Features
 *** Package and add to pypi

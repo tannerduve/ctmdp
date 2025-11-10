@@ -3,7 +3,7 @@ from ctmdp.constructors.cycle import cycle_mdp_actions
 
 
 def path_mdp_actions(i, n):
-    actions = cycle_mdp_actions(i)
+    actions = cycle_mdp_actions(i, n)
     if i == 0:
         actions.pop("prev")
     if i == n - 1:
