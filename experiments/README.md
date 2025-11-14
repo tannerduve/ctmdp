@@ -161,7 +161,7 @@ Four path graphs of length 3 composed into 3×3×3×3 grid (81 states).
 
 | Dimension | BP Actions | CP Actions | Ratio | BP Distance from Optimal | CP Distance from Optimal |
 |-----------|------------|------------|-------|--------------------------|--------------------------|
-| 4D        | 8          | 16         | 2.00x | TBD                      | TBD                      |
+| 4D        | 8          | 16         | 2.00x | 0.24                     | 1.02                     |
 
 Distance is L1 norm between action probability distributions. CP has 2x more actions than BP. The gap widens as dimensionality increases.
 
