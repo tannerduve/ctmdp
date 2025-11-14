@@ -1,10 +1,10 @@
-use crate::{mdp_trait, measure::Measure};
+use crate::{mdp, measure::Measure};
 use madepro::environments::gridworld::Gridworld;
 use madepro::environments::gridworld::{GridworldAction, GridworldState};
 use madepro::models::{MDP, Sampler};
 use std::ops::Deref;
 
-impl mdp_trait::MDP for Gridworld {
+impl mdp::MDP for Gridworld {
     type State = GridworldState;
     type Action = GridworldAction;
 
@@ -65,7 +65,7 @@ impl GridworldWithGoals {
     }
 }
 
-impl mdp_trait::MDP for GridworldWithGoals {
+impl mdp::MDP for GridworldWithGoals {
     type State = GridworldState;
     type Action = GridworldAction;
 

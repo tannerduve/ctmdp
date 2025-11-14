@@ -1,6 +1,6 @@
 use super::{END_TRANSITION_REWARD, NO_OP_TRANSITION_REWARD};
 use crate::measure::Measure;
-use crate::{mdp_trait::MDP, measure::Probability};
+use crate::{mdp::MDP, measure::Probability};
 use madepro::models::{Action, Sampler, State};
 use std::{collections::HashMap, hash::Hash, path::Path, vec};
 
@@ -38,10 +38,15 @@ pub struct CartesianProduct<M1, M2> {
     mdp2: M2,
 }
 
-//TODO:
+// //TODO:
 // impl<M1: MDP, M2: MDP> MDP for BoxProduct<M1, M2> {
 //     type State = Product<M1::State, M2::State>;
 //     type Action = BoxAction<M1::Action, M2::Action>;
+
+//     fn all_states(&self) -> &Sampler<Self::State> {
+//         let states: Vec<Self::State> = M1::all_states(&self.mdp1).iter().zip(M2::all_states(&self.mdp2).iter()).collect();
+
+//     }
 
 //     fn stochastic_transition(...) -> ... {
 //         // Implement product logic here

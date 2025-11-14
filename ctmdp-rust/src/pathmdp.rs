@@ -1,6 +1,6 @@
 use super::{END_TRANSITION_REWARD, NO_OP_TRANSITION_REWARD};
 use crate::measure::Measure;
-use crate::{mdp_trait::MDP, measure::Probability};
+use crate::{mdp::MDP, measure::Probability};
 use madepro::models::{Action, Sampler, State};
 use std::{collections::HashMap, hash::Hash, path::Path, vec};
 
