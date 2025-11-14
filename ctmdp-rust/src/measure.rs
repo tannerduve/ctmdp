@@ -57,4 +57,24 @@ impl<T: Eq + Hash> Measure<T> {
     pub fn get_prob(&self, key: &T) -> Option<&Probability> {
         self.dist.get(key)
     }
+
+    pub fn product<U: Eq + Hash + Clone>(
+        &self,
+        other: &Measure<U>,
+    ) -> Result<Measure<(T, U)>, Error>
+    where
+        T: Clone,
+    {
+        let dict1 = &self.dist;
+        let dict2 = &other.dist;
+        let dist = dict1
+            .iter()
+            .flat_map(|(s1, w1)| {
+                dict2
+                    .iter()
+                    .map(move |(s2, w2)| ((s1.clone(), s2.clone()), w1.and(*w2)))
+            })
+            .collect();
+        Measure::from_distribution(dist)
+    }
 }
