@@ -12,12 +12,12 @@ impl mdp::MDP for Gridworld {
         self.get_states()
     }
 
-    fn all_actions(&self) -> &Sampler<Self::Action> {
-        self.get_actions()
-    }
-
     fn is_final_state(&self, state: &Self::State) -> bool {
         self.is_state_terminal(state)
+    }
+
+    fn actions_at(&self, state: &Self::State) -> Vec<Self::Action> {
+        self.get_actions().iter().cloned().collect()
     }
 
     fn stochastic_transition(
@@ -73,8 +73,8 @@ impl mdp::MDP for GridworldWithGoals {
         self.get_states()
     }
 
-    fn all_actions(&self) -> &Sampler<Self::Action> {
-        self.get_actions()
+    fn actions_at(&self, _state: &Self::State) -> Vec<Self::Action> {
+        self.get_actions().iter().cloned().collect()
     }
 
     fn is_final_state(&self, state: &Self::State) -> bool {

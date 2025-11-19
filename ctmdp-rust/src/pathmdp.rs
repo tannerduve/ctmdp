@@ -48,15 +48,16 @@ impl MDP for PathWorld {
     type State = PathState;
     type Action = PathAction;
 
-    fn all_actions(&self) -> &Sampler<Self::Action> {
-        &self.actions
-    }
     fn all_states(&self) -> &Sampler<Self::State> {
         &self.states
     }
 
     fn is_final_state(&self, state: &PathState) -> bool {
         state.0 == self.length() - 1
+    }
+
+    fn actions_at(&self, _state: &Self::State) -> Vec<Self::Action> {
+        self.actions.iter().cloned().collect()
     }
 
     fn stochastic_transition(
