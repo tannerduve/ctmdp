@@ -1,4 +1,5 @@
 use crate::measure::Measure;
+use crate::error::Error;
 use madepro::models::{Action, Sampler, State};
 
 pub trait MDP {
@@ -16,7 +17,8 @@ pub trait MDP {
     }
 
     fn all_state_action_pairs(&self) -> Vec<(Self::State, Self::Action)> {
-        self.all_states().iter()
+        self.all_states()
+            .iter()
             .flat_map(|s| self.actions_at(s).into_iter().map(move |a| (s.clone(), a)))
             .collect()
     }
@@ -25,5 +27,5 @@ pub trait MDP {
         &self,
         state: &Self::State,
         action: &Self::Action,
-    ) -> (Measure<Self::State>, f64);
+    ) -> Result<(Measure<Self::State>, f64), Error>;
 }

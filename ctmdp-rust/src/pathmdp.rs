@@ -1,6 +1,7 @@
 use super::{END_TRANSITION_REWARD, NO_OP_TRANSITION_REWARD};
 use crate::measure::Measure;
 use crate::{mdp::MDP, measure::Probability};
+use crate::error::Error;
 use madepro::models::{Action, Sampler, State};
 use std::{collections::HashMap, hash::Hash, path::Path, vec};
 
@@ -64,7 +65,7 @@ impl MDP for PathWorld {
         &self,
         state: &Self::State,
         action: &Self::Action,
-    ) -> (Measure<Self::State>, f64) {
+    ) -> Result<(Measure<Self::State>, f64), Error> {
         let current = state.0;
         let length = self.length();
         // Tentative position
@@ -75,7 +76,7 @@ impl MDP for PathWorld {
         // Out of bounds check
         if next >= length || next == current {
             let measure = Measure::deterministic(state.clone());
-            return (measure, NO_OP_TRANSITION_REWARD);
+            return Ok((measure, NO_OP_TRANSITION_REWARD));
         }
         let reward = match action {
             Self::Action::Next => 0.1,
@@ -83,9 +84,9 @@ impl MDP for PathWorld {
         };
         let measure = Measure::deterministic(PathState(next));
         if next == length - 1 {
-            (measure, END_TRANSITION_REWARD + reward)
+            Ok((measure, END_TRANSITION_REWARD + reward))
         } else {
-            (measure, reward)
+            Ok((measure, reward))
         }
     }
 }

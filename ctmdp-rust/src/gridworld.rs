@@ -2,6 +2,7 @@ use crate::{mdp, measure::Measure};
 use madepro::environments::gridworld::Gridworld;
 use madepro::environments::gridworld::{GridworldAction, GridworldState};
 use madepro::models::{MDP, Sampler};
+use crate::error::Error;
 use std::ops::Deref;
 
 impl mdp::MDP for Gridworld {
@@ -24,10 +25,10 @@ impl mdp::MDP for Gridworld {
         &self,
         state: &Self::State,
         action: &Self::Action,
-    ) -> (Measure<Self::State>, f64) {
+    ) -> Result<(Measure<GridworldState>, f64), Error> {
         let (transition_state, reward) = self.transition(state, action);
         let map = Measure::deterministic(transition_state);
-        (map, reward)
+        Ok((map, reward))
     }
 }
 
@@ -89,7 +90,7 @@ impl mdp::MDP for GridworldWithGoals {
         &self,
         state: &Self::State,
         action: &Self::Action,
-    ) -> (Measure<Self::State>, f64) {
+    ) -> Result<(Measure<GridworldState>, f64), Error> {
         self.gridworld.stochastic_transition(state, action)
     }
 }

@@ -77,4 +77,34 @@ impl<T: Eq + Hash> Measure<T> {
             .collect();
         Measure::from_distribution(dist)
     }
+
+    /// Sample a state from the measure according to its probability distribution
+    pub fn sample(&self) -> Option<&T>
+    where
+        T: Clone,
+    {
+        if self.dist.is_empty() {
+            return None;
+        }
+        
+        // Convert to vectors for weighted sampling
+        let states: Vec<&T> = self.dist.keys().collect();
+        let weights: Vec<f64> = self.dist.values().map(|p| p.value()).collect();
+        
+        // Use weighted random choice
+        use rand::Rng;
+        let mut rng = rand::rng();
+        let random_value: f64 = rng.random();
+        
+        let mut cumulative = 0.0;
+        for (i, weight) in weights.iter().enumerate() {
+            cumulative += weight;
+            if random_value <= cumulative {
+                return Some(states[i]);
+            }
+        }
+        
+        // Fallback: return the last state (shouldn't happen if distribution is valid)
+        states.last().copied()
+    }
 }
