@@ -261,8 +261,6 @@ checksum = "2874a2af47a2325c2001a6e6fad9b16a53b802102b528163885171cf92b15976"
 [[package]]
 name = "madepro"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc149b627ee1b839cdd08ac9708b77a2c8912b28d3db36fcc6da3eb9b5365523"
 dependencies = [
  "rand 0.8.5",
 ]

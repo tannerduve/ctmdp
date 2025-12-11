@@ -51,12 +51,12 @@ where
     M2::State: Clone,
 {
     pub fn new(mdp1: M1, mdp2: M2) -> Self {
-        let s1 = mdp1.all_states().iter();
-        let s2 = mdp2.all_states().iter();
-        let states: Vec<Product<M1::State, M2::State>> = s1
-            .zip(s2)
-            .map(|(x1, x2)| Product::new(x1.clone(), x2.clone()))
-            .collect();
+        let mut states = Vec::new();
+        for s1 in mdp1.all_states().iter() {
+            for s2 in mdp2.all_states().iter() {
+                states.push(Product::new(s1.clone(), s2.clone()));
+            }
+        }
         let states = Sampler::new(states);
 
         BoxProduct { mdp1, mdp2, states }
@@ -214,4 +214,3 @@ where
     }
 
 }
-
