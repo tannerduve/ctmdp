@@ -37,6 +37,14 @@ impl<S1, S2> Product<S1, S2> {
     pub fn new(s1: S1, s2: S2) -> Self {
         Product { fst: s1, snd: s2 }
     }
+
+    pub fn first(&self) -> &S1 {
+        &self.fst
+    }
+
+    pub fn second(&self) -> &S2 {
+        &self.snd
+    }
 }
 
 impl<S1: State, S2: State> State for Product<S1, S2> {}

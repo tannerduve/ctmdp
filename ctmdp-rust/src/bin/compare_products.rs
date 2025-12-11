@@ -204,9 +204,7 @@ fn run_experiment(size: usize, num_runs: usize, num_episodes: usize) {
 }
 
 fn main() {
-    println!("======================================================================");
-    println!("Compare Box Product vs Cartesian Product (Rust)");
-    println!("======================================================================");
+    println!("2D chain: Box vs Cartesian products");
 
     let configs = vec![(4usize, 10usize, 1500usize), (6, 10, 2000)];
 

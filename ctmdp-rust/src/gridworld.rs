@@ -17,7 +17,7 @@ impl mdp::MDP for Gridworld {
         self.is_state_terminal(state)
     }
 
-    fn actions_at(&self, state: &Self::State) -> Vec<Self::Action> {
+    fn actions_at(&self, _state: &Self::State) -> Vec<Self::Action> {
         self.get_actions().iter().cloned().collect()
     }
 

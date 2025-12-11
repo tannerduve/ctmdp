@@ -16,17 +16,21 @@ madepro = { path = "../vendor/madepro" }
 criterion = "0.7.0"
 
 [[bin]]
-name = "compare_products"
-path = "src/bin/compare_products.rs"
-
-[[bin]]
-name = "compare_chains"
-path = "src/bin/compare_chains.rs"
-
-[[bin]]
 name = "compare_3d"
 path = "src/bin/compare_3d.rs"
 
 [[bin]]
 name = "compare_4d"
 path = "src/bin/compare_4d.rs"
+
+[[bin]]
+name = "compare_6d"
+path = "src/bin/compare_6d.rs"
+
+[[bin]]
+name = "compare_gridworld_products"
+path = "src/bin/compare_gridworld_products.rs"
+
+[[bin]]
+name = "generalization_products"
+path = "src/bin/generalization_products.rs"

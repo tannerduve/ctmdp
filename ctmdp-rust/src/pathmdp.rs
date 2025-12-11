@@ -1,9 +1,8 @@
 use super::{END_TRANSITION_REWARD, NO_OP_TRANSITION_REWARD};
 use crate::measure::Measure;
-use crate::{mdp::MDP, measure::Probability};
+use crate::mdp::MDP;
 use crate::error::Error;
 use madepro::models::{Action, Sampler, State};
-use std::{collections::HashMap, hash::Hash, path::Path, vec};
 
 #[derive(PartialEq, Eq, Hash, Debug, Clone)]
 pub enum PathAction {
@@ -19,6 +18,10 @@ pub struct PathState(pub(crate) usize);
 impl PathState {
     pub fn new(idx: usize) -> Self {
         PathState(idx)
+    }
+
+    pub fn index(&self) -> usize {
+        self.0
     }
 }
 

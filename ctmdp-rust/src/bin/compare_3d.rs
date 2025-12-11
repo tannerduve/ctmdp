@@ -178,9 +178,7 @@ where
 }
 
 fn main() {
-    println!("======================================================================");
-    println!("3D Gridworld-style Experiment: Box Product vs Cartesian Product");
-    println!("======================================================================");
+    println!("3D path-product: Box vs Cartesian");
 
     let size = 4usize;
     let num_runs = 10usize;
@@ -219,15 +217,8 @@ fn main() {
     let bp_mean: f64 = bp_dists.iter().copied().sum::<f64>() / bp_dists.len() as f64;
     let cp_mean: f64 = cp_dists.iter().copied().sum::<f64>() / cp_dists.len() as f64;
 
-    println!();
-    println!("Results:");
+    println!("\nResults:");
     println!("  BP policy distance: {:.4}", bp_mean);
     println!("  CP policy distance: {:.4}", cp_mean);
     println!("  Ratio (CP/BP): {:.2}x", cp_mean / bp_mean);
-
-    println!();
-    println!("======================================================================");
-    println!("In 3D, CP still has a larger joint action space than BP.");
-    println!("This experiment mirrors the Python 3D grid comparison.");
-    println!("======================================================================");
 }

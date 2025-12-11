@@ -261,9 +261,7 @@ where
 }
 
 fn main() {
-    println!("======================================================================");
-    println!("Chain with Branches Experiment: Box Product vs Cartesian Product");
-    println!("======================================================================");
+    println!("Chain with branches: Box vs Cartesian products");
 
     let configs = vec![(6usize, vec![2usize, 4usize]), (8usize, vec![3usize, 5usize])];
     let num_runs = 10usize;
@@ -304,8 +302,5 @@ fn main() {
     }
 
     println!();
-    println!("======================================================================");
     println!("Heterogeneous action spaces: detours exist only at some states.");
-    println!("BP can learn to avoid detours independently per component.");
-    println!("======================================================================");
 }
