@@ -30,7 +30,3 @@ path = "src/bin/compare_6d.rs"
 [[bin]]
 name = "compare_gridworld_products"
 path = "src/bin/compare_gridworld_products.rs"
-
-[[bin]]
-name = "generalization_products"
-path = "src/bin/generalization_products.rs"
